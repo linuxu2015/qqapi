@@ -6,6 +6,7 @@ import json
 import sys
 import headers
 import random
+import cPickle as pk
 reload(sys)
 sys.setdefaultencoding('utf-8')
 def saveImage(imgName = 'default.jpg'):
@@ -46,6 +47,8 @@ ptuiCB('0','0',
 res = session.get(url)
 #print res.text
 new_cookies = session.cookies
+cookies_file = open("E:\\qqapi\\img\\cookies_file.pkl","wb")
+pk.dump(new_cookies,cookies_file,True)
 for item in  new_cookies:
 	if item.name == 'ptwebqq':
 		ptwebqq = item.value
@@ -77,15 +80,17 @@ psessionid = data['result']['psessionid']
 print psessionid
 session = requests.Session()
 session.headers = headers.send_msg
+cookies_file = file("E:\\qqapi\\img\\cookies_file.pkl","rb")
+new_cookies = pk.load(cookies_file)
 status = True
 while status:
     msg_id = int(random.random()*100000000)
     msg = {
-    "to":371044414,
+    "to":4235143461,
     "content":"[\"test……\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]",
     "face":549,
     "clientid":53999199,
-    "msg_id":msg_id,
+    "msg_id":86170037,
     "psessionid":psessionid
     }
     a = session.post('http://d1.web2.qq.com/channel/send_buddy_msg2',cookies=new_cookies,data = {"r":json.dumps(msg)})
@@ -97,4 +102,4 @@ while status:
     else:
         status = True
         print "send failed"
-        time.sleep(5)
+        # time.sleep(5)
