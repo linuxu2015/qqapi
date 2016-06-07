@@ -40,24 +40,26 @@ psessionid = data['result']['psessionid']
 session = requests.Session()
 session.headers = headers.send_msg
 date = time.asctime()
-status = True
-while status:
-    msg_id = int(random.random()*100000000)
-    msg = {
-    "to":4235143461,
-    "content":"[\"@371044414 test……%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]" %date,
+def send(user,massage):
+    status = True
+    while status:
+        msg_id = int(random.random()*100000000)
+        msg = {
+    "to":user,
+    "content":"[\"%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]" %massage,
     "face":549,
     "clientid":53999199,
     "msg_id":msg_id,
     "psessionid":psessionid
     }
-    a = session.post('http://d1.web2.qq.com/channel/send_buddy_msg2',cookies=new_cookies,data = {"r":json.dumps(msg)})
-    print a.text
-    if "ok" in a.text:
-        status = False
-        print "send sussess"
-        break
-    else:
-        status = True
-        print "send failed"
+        a = session.post('http://d1.web2.qq.com/channel/send_buddy_msg2',cookies=new_cookies,data = {"r":json.dumps(msg)})
+        print a.text
+        if "ok" in a.text:
+            status = False
+            print "send sussess"
+            break
+        else:
+            status = True
+            print "send failed"
         # time.sleep(5)
+# send(4235143461,"")

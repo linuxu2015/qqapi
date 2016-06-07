@@ -40,24 +40,26 @@ psessionid = data['result']['psessionid']
 session = requests.Session()
 session.headers = headers.send_msg
 date = time.asctime()
-status = True
-while status:
-    msg_id = int(random.random()*100000000)
-    msg = {
-        "group_uin":3920456119,
-        "content":"[\"测试\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]",
-        "face":543,
-        "clientid":53999199,
-        "msg_id":msg_id,
-        "psessionid":psessionid
-    }
-    a = session.post('http://d1.web2.qq.com/channel/send_qun_msg2',cookies=new_cookies,data = {"r":json.dumps(msg)})
-    print a.text
-    if "ok" in a.text:
-        status = False
-        print "send sussess"
-        break
-    else:
-        status = True
-        print "send failed"
+def send_qun(group_id,massage):
+    status = True
+    while status:
+        msg_id = int(random.random()*100000000)
+        msg = {
+            "group_uin":group_id,
+            "content":"[\"%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]" %massage,
+            "face":543,
+            "clientid":53999199,
+            "msg_id":msg_id,
+            "psessionid":psessionid
+        }
+        a = session.post('http://d1.web2.qq.com/channel/send_qun_msg2',cookies=new_cookies,data = {"r":json.dumps(msg)})
+        print a.text
+        if "ok" in a.text:
+            status = False
+            print "send sussess"
+            break
+        else:
+            status = True
+            print "send failed"
         # time.sleep(5)
+# send_qun(3920456119,"哈哈")
