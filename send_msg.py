@@ -11,7 +11,7 @@ new_cookies = pk.load(cookies_file)
 for item in  new_cookies:
 	if item.name == 'ptwebqq':
 		ptwebqq = item.value
-print ptwebqq
+# print ptwebqq
 session = requests.Session()
 session.headers = headers.get_ptwebqq
 
@@ -22,7 +22,7 @@ res = session.get(url,cookies=new_cookies)
 data = json.loads(res.text)
 #print data
 vfwebqq = data['result']['vfwebqq']
-print vfwebqq
+# print vfwebqq
 session = requests.Session()
 session.headers = headers.get_psessionid
 data ={
@@ -34,9 +34,9 @@ data ={
 r = json.dumps(data)
 a = session.post('http://d1.web2.qq.com/channel/login2',cookies=new_cookies,data={"r":r})
 data = json.loads(a.text)
-print data
+# print data
 psessionid = data['result']['psessionid']
-print psessionid
+# print psessionid
 session = requests.Session()
 session.headers = headers.send_msg
 date = time.asctime()
@@ -45,10 +45,10 @@ while status:
     msg_id = int(random.random()*100000000)
     msg = {
     "to":4235143461,
-    "content":"[\"test……%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]" %date,
+    "content":"[\"@371044414 test……%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]" %date,
     "face":549,
     "clientid":53999199,
-    "msg_id":86170037,
+    "msg_id":msg_id,
     "psessionid":psessionid
     }
     a = session.post('http://d1.web2.qq.com/channel/send_buddy_msg2',cookies=new_cookies,data = {"r":json.dumps(msg)})
