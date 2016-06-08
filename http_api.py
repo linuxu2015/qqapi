@@ -3,6 +3,7 @@
 from flask import Flask
 from flask import jsonify
 from flask import request
+from flask import render_template
 app = Flask(__name__)
 status = [
     {
@@ -29,8 +30,8 @@ def send():
         return jdonigy({'resp':'unknown method'})
 @app.route('/qcor')
 def qcor():
-    return  '<html><img src=https://ssl.ptlogin2.qq.com/ptqrshow?appid=501004106&e=0&l=M&s=5&d=72&v=4&t=0.3835296393318739></html>'
+    return  '<html><img src=./static/default.jpg></html>'
 
+def runserver():
+    app.run(port=5001,host='0.0.0.0',debug=True)
 
-if __name__ == '__main__':
-    app.run(port=5000,host='0.0.0.0',debug=True)

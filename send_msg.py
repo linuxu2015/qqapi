@@ -6,7 +6,8 @@ import headers
 import json
 import cPickle as pk
 import time
-cookies_file = file("E:\\qqapi\\img\\cookies_file.pkl","rb")
+#cookies_file = file("E:\\qqapi\\img\\cookies_file.pkl","rb")
+cookies_file = file("/opt/qqapi/img/cookies_file.pkl","rb")
 new_cookies = pk.load(cookies_file)
 for item in  new_cookies:
 	if item.name == 'ptwebqq':
@@ -61,5 +62,24 @@ def send(user,massage):
         else:
             status = True
             print "send failed"
-        # time.sleep(5)
-# send(4235143461,"")
+def send_qun(group_id,massage):
+    status = True
+    while status:
+        msg_id = int(random.random()*100000000)
+        msg = {
+            "group_uin":group_id,
+            "content":"[\"%s\",[\"font\",{\"name\":\"宋体\",\"size\":10,\"style\":[0,0,0],\"color\":\"000000\"}]]" %massage,
+            "face":543,
+            "clientid":53999199,
+            "msg_id":msg_id,
+            "psessionid":psessionid
+        }
+        a = session.post('http://d1.web2.qq.com/channel/send_qun_msg2',cookies=new_cookies,data = {"r":json.dumps(msg)})
+        print a.text
+        if "ok" in a.text:
+            status = False
+            print "send sussess"
+            break
+        else:
+            status = True
+            print "send failed"
